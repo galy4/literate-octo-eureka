@@ -1,9 +1,6 @@
-package com.luxoft;
+package com.luxoft.steps;
 
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import io.cucumber.java.en.*;
 import org.junit.jupiter.api.Assumptions;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,31 +11,37 @@ public class StepDefinitions {
     private int distance;
     boolean hunger = false;
 
-    @Given("Lucy is in {int} m from Sean")
+    @Given("^.ucy .* (\\d+) m from Sean$")
     public void lucy_is_in_m_from_sean(Integer int1) {
         // Write code here that turns the phrase above into concrete actions
-//        throw new io.cucumber.java.PendingException();
+
         distance = int1;
         System.out.println("distance is " + distance);
+//        throw new io.cucumber.java.PendingException();
     }
 
-    @When("Sean shouts {string}")
+    @When("^Sean shouts '([^']*)'$")
     public void seanShoutsFreeBagels(String arg0) {
         System.out.println(arg0);
     }
 
-    @Then("Lucy hears Sean message")
-    public void lucyHearsSeanMessage() {
-        Assumptions.assumingThat(hunger, ()->assertThat(distance, lessThan(15)));
+    @Then("^Lucy (hears|not hear) Sean message$")
+    public void lucyHearsSeanMessage(String arg0) {
+        if(arg0.equalsIgnoreCase("hears"))
+            Assumptions.assumingThat(hunger, ()->assertThat(distance, lessThan(15)));
+        else
+            assertThat(distance, greaterThan(15));
     }
 
-    @Then("Lucy not hear Sean message")
-    public void lucyNotHearSeanMessage() {
-        assertThat(distance, greaterThan(15));
-    }
-
-    @And("Lucy is hungry")
+    @And("^(?:Lucy|Alice|Kate) is hungry$")
     public void lucyIsHungry() {
         hunger = true;
     }
+
+    @But("Lucy is not hungry")
+    public void lucyIsNotHungry() {
+        hunger = false;
+    }
+
+
 }
