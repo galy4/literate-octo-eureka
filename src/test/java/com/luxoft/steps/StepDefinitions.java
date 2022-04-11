@@ -17,11 +17,10 @@ public class StepDefinitions {
 
         distance = int1;
         System.out.println("distance is " + distance);
-//        throw new io.cucumber.java.PendingException();
     }
 
-    @When("^Sean shouts '([^']*)'$")
-    public void seanShoutsFreeBagels(String arg0) {
+    @When("^Sean \\w+ '([^']*)'$")
+    public void seanShoutsFreeBagels1(String arg0) {
         System.out.println(arg0);
     }
 
@@ -44,4 +43,10 @@ public class StepDefinitions {
     }
 
 
+
+    @When("Sean shouts")
+    public void seanShouts(String arg) {
+        System.out.println(arg);
+        throw new io.cucumber.java.PendingException();
+    }
 }

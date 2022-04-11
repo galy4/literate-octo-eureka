@@ -1,5 +1,5 @@
 
-
+@shout
 Feature: Shout feature
   This Feature describes Lucy and Sean interaction
   in terms of free bagels
@@ -7,6 +7,8 @@ Feature: Shout feature
   Background:
     Given Sean shouts 'Background'
 
+  @tag1 @positive
+    @tag2
   Scenario: Listener is within range
   this scenario describes positive
   case
@@ -14,11 +16,25 @@ Feature: Shout feature
     When Sean shouts 'Free bagels!'
     Then Lucy hears Sean message
 
+    @tag1
   Scenario: Listener is out of range
     Given Lucy is in 20 m from Sean
     When Sean shouts 'Free bagels!'
     Then Lucy not hear Sean message
 
+      @positive
+  Scenario: Listener is out of range 1
+    Given Lucy is in 20 m from Sean
+    When Sean shouts
+    """
+    This is a
+    multirow text
+    example
+    111
+    """
+    Then Lucy not hear Sean message
+
+        @tag1 @positive
   Scenario: Lucy is hungry
     Then Lucy is in 10 m from Sean
     Given Kate is hungry

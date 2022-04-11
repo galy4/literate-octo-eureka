@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
     dryRun = false,
     monochrome = false,
     snippets = CucumberOptions.SnippetType.CAMELCASE,
-//    tags = "",
+    tags = "@shout",
     plugin = {"pretty", "html:target/cucumber-reports/cucumber-pretty"}
 )
 public class RunTest {

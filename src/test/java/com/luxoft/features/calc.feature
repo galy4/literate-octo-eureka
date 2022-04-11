@@ -1,3 +1,4 @@
+@feature2
 Feature: datatable examples
 
   Scenario: ex1
