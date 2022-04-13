@@ -1,11 +1,27 @@
 package com.luxoft;
 
-import io.cucumber.java.After;
-import io.cucumber.java.AfterStep;
-import io.cucumber.java.Before;
-import io.cucumber.java.BeforeStep;
+import io.cucumber.java.*;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+import java.util.concurrent.TimeUnit;
 
 public class Hooks {
+
+    @Before(order = 2, value = "@web")
+    public void strtDriver(){
+        if(Auxillary.driver == null) {
+            WebDriverManager.chromedriver().setup();
+            ChromeOptions options = new ChromeOptions();
+            options.setAcceptInsecureCerts(true);
+            options.setHeadless(false);
+            Auxillary.driver = new ChromeDriver(options);
+            Auxillary.driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
+            Auxillary.driver.manage().window().maximize();
+            Auxillary.driver.navigate().to("https://www.luxoft.com/");
+        }
+    }
 
     @Before(order = 15, value = "@shout and not @positive")
     public void beforeHook(){
@@ -18,8 +34,8 @@ public class Hooks {
     }
 
     @After(order = 20)
-    public void afterHook(){
-        System.out.println("after hook");
+    public void afterHook(Scenario scenario){
+        System.out.println(scenario.getName());
     }
 
     @After(order = 30)

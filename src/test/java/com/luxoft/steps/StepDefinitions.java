@@ -1,6 +1,7 @@
 package com.luxoft.steps;
 
 import io.cucumber.java.en.*;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assumptions;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -12,6 +13,7 @@ public class StepDefinitions {
     boolean hunger = false;
 
     @Given("^.ucy .* (\\d+) m from Sean$")
+    @Step("Lucy is in {0} m from Sean")
     public void lucy_is_in_m_from_sean(Integer int1) {
         // Write code here that turns the phrase above into concrete actions
 
@@ -20,11 +22,13 @@ public class StepDefinitions {
     }
 
     @When("^Sean \\w+ '([^']*)'$")
+    @Step("Sean shouts {0}")
     public void seanShoutsFreeBagels1(String arg0) {
         System.out.println(arg0);
     }
 
     @Then("^Lucy (hears|not hear) Sean message$")
+    @Step("Lucy {arg0} Sean message")
     public void lucyHearsSeanMessage(String arg0) {
         if(arg0.equalsIgnoreCase("hears"))
             Assumptions.assumingThat(hunger, ()->assertThat(distance, lessThan(15)));
@@ -33,11 +37,13 @@ public class StepDefinitions {
     }
 
     @And("^(?:Lucy|Alice|Kate) is hungry$")
+    @Step("(?:Lucy|Alice|Kate) is hungry")
     public void lucyIsHungry() {
         hunger = true;
     }
 
     @But("Lucy is not hungry")
+    @Step("Lucy is not hungry")
     public void lucyIsNotHungry() {
         hunger = false;
     }
@@ -45,8 +51,9 @@ public class StepDefinitions {
 
 
     @When("Sean shouts")
+    @Step("Sean shouts")
     public void seanShouts(String arg) {
         System.out.println(arg);
-        throw new io.cucumber.java.PendingException();
+//        throw new io.cucumber.java.PendingException();
     }
 }

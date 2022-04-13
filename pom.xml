@@ -17,6 +17,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>4.3.1</version>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>io.cucumber</groupId>
@@ -195,6 +201,36 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>net.masterthought</groupId>
+                <artifactId>maven-cucumber-reporting</artifactId>
+                <version>5.0.0</version>
+                <executions>
+                    <execution>
+                        <id>execution</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <projectName>cucumber</projectName>
+                            <buildNumber>${maven.build.timestamp}</buildNumber>
+                            <!--Where to save generated report. Use mvn verify to generate -->
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <!--Where to get cucumber.json report. Use mvn clean test to generate -->
+                            <jsonFiles>
+                                <!-- supports wildcard or name pattern -->
+                                <param>**/cucumber*.json</param>
+                            </jsonFiles>
+                            <trendsLimit>0</trendsLimit>
+                            <trendsFile>/tmp/cucumber-trends.json</trendsFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
 </project>
