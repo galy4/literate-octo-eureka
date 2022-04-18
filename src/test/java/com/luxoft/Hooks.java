@@ -2,24 +2,20 @@ package com.luxoft;
 
 import io.cucumber.java.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.concurrent.TimeUnit;
 
 public class Hooks {
+    public static Auxillary auxillary = new Auxillary();
 
     @Before(order = 2, value = "@web")
     public void strtDriver(){
-        if(Auxillary.driver == null) {
-            WebDriverManager.chromedriver().setup();
-            ChromeOptions options = new ChromeOptions();
-            options.setAcceptInsecureCerts(true);
-            options.setHeadless(false);
-            Auxillary.driver = new ChromeDriver(options);
-            Auxillary.driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
-            Auxillary.driver.manage().window().maximize();
-            Auxillary.driver.navigate().to("https://www.luxoft.com/");
+        if(auxillary.getDriver().get() == null) {
+           createDriver();
         }
     }
 
@@ -41,6 +37,26 @@ public class Hooks {
     @After(order = 30)
     public void afterHook1(){
         System.out.println("22222222222222");
+    }
+
+    @After(value = "@web or @webweb")
+    public void takeScreenshot(Scenario scenario){
+        if(scenario.isFailed()){
+            final byte[] screenshot = ((TakesScreenshot) auxillary.getDriver().get()).getScreenshotAs(OutputType.BYTES); //take screenshot
+            scenario.attach(screenshot, "image/png", scenario.getName()); // ... and embed it in the report.
+        }
+
+    }
+
+    public static void createDriver(){
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions();
+        options.setAcceptInsecureCerts(true);
+        options.setHeadless(false);
+        auxillary.getDriver().set(new ChromeDriver(options));
+        auxillary.getDriver().get().manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
+        auxillary.getDriver().get().manage().window().maximize();
+        auxillary.getDriver().get().navigate().to("https://www.luxoft.com/");
     }
 
 //    @BeforeStep

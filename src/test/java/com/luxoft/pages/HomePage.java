@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class HomePage {
+public class HomePage extends CommonPage{
     WebDriver driver;
 
     public HomePage(WebDriver driver) {
@@ -20,12 +20,6 @@ public class HomePage {
                 elem = driver.findElement(By.className("logo")); break;
         }
         return elem;
-    }
-
-
-
-    public boolean isElementDisplayed(String name){
-        return getElement(name).isDisplayed();
     }
 
     public boolean verifyMenuItems(List<String> items){

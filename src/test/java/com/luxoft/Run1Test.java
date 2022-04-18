@@ -17,17 +17,18 @@ import static com.luxoft.Hooks.createDriver;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
+//    features = "src/test/java/com/luxoft/features/unit",
     features = "src/test/java/com/luxoft/features/web",
     glue = "com.luxoft.steps",
     dryRun = false,
     monochrome = false,
     snippets = CucumberOptions.SnippetType.CAMELCASE,
-    tags = "@web",
+    tags = "@webweb",
     plugin = {"pretty", "html:target/cucumber-reports/cucumber-pretty",
-            "json:target/cucumber1.json"
+            "json:target/cucumber2.json"
     }
 )
-public class RunTest {
+public class Run1Test {
 
     @BeforeClass
     public static void startDriver(){
